@@ -1,0 +1,5 @@
+# This is the file that declares what files get ignored with GIT.
+.tscache
+.baseDir.ts
+dist
+node_modules
