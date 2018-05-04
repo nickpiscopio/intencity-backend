@@ -6,7 +6,9 @@
 export enum ColumnType {
     serial,
     integer,
+    smallint,
     bigint,
+    decimal,
     varchar,
     char
 }

@@ -15,7 +15,6 @@ import { IndexRoute2 } from './routes/index_2';
  * @class Server
  */
 export class Server {
-
   public app: express.Application;
 
   /**
@@ -37,6 +36,8 @@ export class Server {
     // Configure the application.
     this.setConfig();
 
+    // Creates a new database instance.
+    // this initializes Postgres.
     new Database();
 
     // Sets the routes.

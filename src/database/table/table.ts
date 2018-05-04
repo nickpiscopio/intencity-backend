@@ -29,8 +29,7 @@ export class Table {
                 query += '(' + columnLength + ')';
             }
 
-            let primary = column.primary;
-            if (primary) {
+            if (column.primary) {
                 query += ' primary key';
             }
 

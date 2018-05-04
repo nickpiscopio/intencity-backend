@@ -4,15 +4,15 @@ import { ColumnType as Type } from '../../enum/column_type';
 import { ColumnType } from './column_type';
 
 /**
- * The model for the Badge table.
+ * The model for the ExercisePriority table.
  */
-export class Badge extends Table {
-    private readonly TABLE_NAME = 'badge';
+export class ExercisePriority extends Table {
+    private readonly TABLE_NAME = 'exercise_priority';
 
     private readonly ID = 'id';
     private readonly ID_USER = 'id_user';
-    private readonly DATE_EARNED = 'date_earned';
-    private readonly NAME_BADGE = 'name_badge';
+    private readonly ID_EXERCISE = 'id_exercise';
+    private readonly PRIORITY = 'priority';
 
     constructor() {
         super();
@@ -21,8 +21,8 @@ export class Badge extends Table {
         this.columns = [
             new Column(this.ID, new ColumnType(Type.serial), false, true),
             new Column(this.ID_USER, new ColumnType(Type.integer), true),
-            new Column(this.DATE_EARNED, new ColumnType(Type.bigint), false),
-            new Column(this.NAME_BADGE, new ColumnType(Type.varchar, 30), false)
+            new Column(this.ID_EXERCISE, new ColumnType(Type.integer), true),
+            new Column(this.PRIORITY, new ColumnType(Type.integer), false)
         ];
     }
 }
