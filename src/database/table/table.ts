@@ -29,6 +29,10 @@ export class Table {
                 query += '(' + columnLength + ')';
             }
 
+            if (!column.nullable) {
+                query += ' not null';
+            }
+
             if (column.primary) {
                 query += ' primary key';
             }

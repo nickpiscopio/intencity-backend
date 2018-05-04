@@ -25,7 +25,7 @@ export class User extends Table {
 
         this.tableName = this.TABLE_NAME;
         this.columns = [
-            new Column(this.ID, new ColumnType(Type.serial), true),
+            new Column(this.ID, new ColumnType(Type.serial), false, true),
             new Column(this.EMAIL, new ColumnType(Type.varchar, 75), false),
             new Column(this.PASSWORD, new ColumnType(Type.varchar, 75), false),
             new Column(this.DATE_CREATED, new ColumnType(Type.bigint), false),
