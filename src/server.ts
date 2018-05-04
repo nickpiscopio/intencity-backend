@@ -1,12 +1,13 @@
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
-import * as express from "express";
-import * as logger from "morgan";
-import * as path from "path";
-import * as errorHandler from "errorhandler";
+import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
+import * as logger from 'morgan';
+import * as errorHandler from 'errorhandler';
 
-import { IndexRoute } from "./routes/index";
-import { IndexRoute2 } from "./routes/index_2";
+import { Database } from './database/database';
+
+import { IndexRoute } from './routes/index';
+import { IndexRoute2 } from './routes/index_2';
 
 /**
  * The server.
@@ -20,9 +21,6 @@ export class Server {
   /**
    * Bootstrap the application.
    *
-   * @class Server
-   * @method bootstrap
-   * @static
    * @return {ng.auto.IInjectorService} Returns the newly created injector for this app.
    */
   public static bootstrap(): Server {
@@ -31,55 +29,31 @@ export class Server {
 
   /**
    * Constructor.
-   *
-   * @class Server
-   * @constructor
    */
   constructor() {
-    //create expressjs application
+    // Create the ExpressJS application.
     this.app = express();
 
-    //configure application
-    this.config();
+    // Configure the application.
+    this.setConfig();
 
-    //add routes
-    this.routes();
+    new Database();
 
-    //add api
-    this.api();
+    // Sets the routes.
+    this.setRoutes();
   }
 
   /**
-   * Create REST API routes
-   *
-   * @class Server
-   * @method api
+   * Configures the application.
    */
-  public api() {
-    //empty for now
-  }
+  public setConfig() {
+    // Mount logger.
+    this.app.use(logger('dev'));
 
-  /**
-   * Configure application
-   *
-   * @class Server
-   * @method config
-   */
-  public config() {
-    //add static paths
-    this.app.use(express.static(path.join(__dirname, "public")));
-
-    //configure pug
-    this.app.set("views", path.join(__dirname, "views"));
-    this.app.set("view engine", "pug");
-
-    //mount logger
-    this.app.use(logger("dev"));
-
-    //mount json form parser
+    // Mount json form parser.
     this.app.use(bodyParser.json());
 
-    //mount query string parser
+    // Mount query string parser.
     this.app.use(bodyParser.urlencoded({
       extended: true
     }));
@@ -99,12 +73,8 @@ export class Server {
 
   /**
    * Create and return Router.
-   *
-   * @class Server
-   * @method routes
-   * @return void
    */
-  private routes() {
+  private setRoutes() {
     let router: express.Router;
     router = express.Router();
 
@@ -112,8 +82,7 @@ export class Server {
     IndexRoute.create(router);
     IndexRoute2.create(router);
 
-    //use router middleware
+    // Use router middleware.
     this.app.use(router);
   }
-
 }
