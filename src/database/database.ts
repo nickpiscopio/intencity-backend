@@ -31,35 +31,58 @@ export class Database {
     private readonly USER = 'intencit';
     private readonly PASSWORD = 'Fkw8ywJ267';
 
-  /**
-   * Constructor to create the database.
-   */
+    // Preparing the connection details:
+    // const cn = 'postgres://username:password@host:port/database';
+    private readonly connection = 'postgres://' + this.USER + ':' + this.PASSWORD + '@' + Network.DATABASE_IP + ':' + Network.DATABASE_PORT + '/' + this.DATABASE_NAME;
+
+    /**
+     * Constructor to create the database.
+     */
     constructor() {
-        // Preparing the connection details:
-        // const cn = 'postgres://username:password@host:port/database';
-        const cn = 'postgres://' + this.USER + ':' + this.PASSWORD + '@' + Network.IP + ':' + Network.PORT + '/' + this.DATABASE_NAME;
+        this.createTables();
+    }
 
+    /**
+     * Creates the tables for Intencity if they haven't been created yet.
+     */
+    createTables() {
+        // The create table query to create all the Intencity tables.
+        const createQuery = new Badge().getCreateTableQuery() +
+                            new CompletedExercise().getCreateTableQuery() +
+                            new CompletedMuscleGroup().getCreateTableQuery() +
+                            new CompletedRoutine().getCreateTableQuery() +
+                            new CompletedRoutineMuscleGroup().getCreateTableQuery() +
+                            new Direction().getCreateTableQuery() +
+                            new Equipment().getCreateTableQuery() +
+                            new Exclusion().getCreateTableQuery() +
+                            new Exercise().getCreateTableQuery() +
+                            new ExerciseNameVariant().getCreateTableQuery() +
+                            new ExercisePriority().getCreateTableQuery() +
+                            new Following().getCreateTableQuery() +
+                            new Muscle().getCreateTableQuery() +
+                            new MuscleGroup().getCreateTableQuery() +
+                            new MuscleGroupRoutine().getCreateTableQuery() +
+                            new Routine().getCreateTableQuery() +
+                            new User().getCreateTableQuery() +
+                            new UserEquipment().getCreateTableQuery() +
+                            new UserMuscleGroupRoutine().getCreateTableQuery();
+
+        // Call the query function to create the tables if they haven't been created yet.
+        this.query(createQuery);
+    }
+
+    /**
+     * Queries the database and then closes the connection when it's done.
+     *
+     * @param {string} query    The query to query the database.
+     */
+    private query(query: string) {
         // Creating a new database instance from the connection details:
-        const db = pgp(cn);
+        const db = pgp(this.connection);
 
-        db.query(new Badge().getCreateTableQuery());
-        db.query(new CompletedExercise().getCreateTableQuery());
-        db.query(new CompletedMuscleGroup().getCreateTableQuery());
-        db.query(new CompletedRoutine().getCreateTableQuery());
-        db.query(new CompletedRoutineMuscleGroup().getCreateTableQuery());
-        db.query(new Direction().getCreateTableQuery());
-        db.query(new Equipment().getCreateTableQuery());
-        db.query(new Exclusion().getCreateTableQuery());
-        db.query(new Exercise().getCreateTableQuery());
-        db.query(new ExerciseNameVariant().getCreateTableQuery());
-        db.query(new ExercisePriority().getCreateTableQuery());
-        db.query(new Following().getCreateTableQuery());
-        db.query(new Muscle().getCreateTableQuery());
-        db.query(new MuscleGroup().getCreateTableQuery());
-        db.query(new MuscleGroupRoutine().getCreateTableQuery());
-        db.query(new Routine().getCreateTableQuery());
-        db.query(new User().getCreateTableQuery());
-        db.query(new UserEquipment().getCreateTableQuery());
-        db.query(new UserMuscleGroupRoutine().getCreateTableQuery());
+        db.query(query);
+
+        // Ends the connection because it isn't needed anymore.
+        pgp.end();
     }
 }

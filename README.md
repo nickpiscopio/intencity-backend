@@ -77,14 +77,16 @@ Quick tips
 
 ## Starting
 
-TypeScript needs to bec omiled into JavaScript prior to running the backend. To comile run:
+![](./config_npm.png)
 
-    npm run grunt
+TypeScript needs to be comiled into JavaScript prior to running the backend. To compile run:
+
+    npm run build
 
 To start the server run:
 
-    npm start
+    npm run app
 
-To comile and start the server afterwards, run:
+To compile and start the server afterwards, run:
 
-    npm run dev
+    npm run start

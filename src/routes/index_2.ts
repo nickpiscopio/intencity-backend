@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { BaseRoute } from "./route";
 
 /**
- * / route
- *
  * @class IndexRoute
  */
 export class IndexRoute2 {
@@ -21,8 +18,6 @@ export class IndexRoute2 {
 
     //add default route
     router.get("/route2", (req: Request, res: Response, next: NextFunction) => {
-      //new IndexRoute().index(req, res, next);
-     
       let response = {
         success: true,
         message: "STARTED ROUTE 2 SUCCESSFULLY!"
@@ -30,15 +25,5 @@ export class IndexRoute2 {
 
       res.send(response);
     });
-  }
-
-  /**
-   * Constructor
-   *
-   * @class IndexRoute
-   * @constructor
-   */
-  constructor() {
-    //super();
   }
 }
