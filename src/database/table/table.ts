@@ -46,4 +46,29 @@ export class Table {
 
         return query;
     }
+
+    /**
+     * Gets the insert query to insert a record into the database.
+     *
+     * @param insert    The record to insert into the database.
+     *                  This is represented as a JSON object.
+     *
+     * @return {string} The insert query to insert a record into the database.
+     */
+    getInsertQuery(insert: any) {
+        let columns = '';
+        let values = '';
+
+        for (let key in insert) {
+            if (columns.length > 0) {
+                columns += ',';
+                values += ',';
+            }
+
+            columns += key;
+            values +=  "'" + insert[key] + "'";
+        }
+
+        return 'insert into ' + this.tableName + '(' + columns + ') values (' + values + ');';
+    }
 }

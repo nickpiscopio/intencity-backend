@@ -6,6 +6,7 @@ import * as errorHandler from 'errorhandler';
 
 import { Database } from './database/database';
 
+import { Account } from './routes/account';
 import { IndexRoute } from './routes/index';
 import { IndexRoute2 } from './routes/index_2';
 
@@ -38,7 +39,7 @@ export class Server {
 
     // Creates a new database instance.
     // this initializes Postgres.
-    new Database();
+    new Database().createTables();
 
     // Sets the routes.
     this.setRoutes();
@@ -80,6 +81,7 @@ export class Server {
     router = express.Router();
 
     // Create the routes.
+    Account.create(router);
     IndexRoute.create(router);
     IndexRoute2.create(router);
 

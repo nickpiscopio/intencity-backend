@@ -36,13 +36,6 @@ export class Database {
     private readonly connection = 'postgres://' + this.USER + ':' + this.PASSWORD + '@' + Network.DATABASE_IP + ':' + Network.DATABASE_PORT + '/' + this.DATABASE_NAME;
 
     /**
-     * Constructor to create the database.
-     */
-    constructor() {
-        this.createTables();
-    }
-
-    /**
      * Creates the tables for Intencity if they haven't been created yet.
      */
     createTables() {
@@ -76,11 +69,16 @@ export class Database {
      *
      * @param {string} query    The query to query the database.
      */
-    private query(query: string) {
+    public query(query: string) {
         // Creating a new database instance from the connection details:
         const db = pgp(this.connection);
 
-        db.query(query);
+        db.query(query)
+            .then(data => {
+                console.log("data: ", data);
+            }).catch(error => {
+               console.error('Query failed: ', error);
+            });
 
         // Ends the connection because it isn't needed anymore.
         pgp.end();

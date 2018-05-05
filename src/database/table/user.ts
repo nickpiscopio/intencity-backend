@@ -30,11 +30,27 @@ export class User extends Table {
             new Column(this.PASSWORD, new ColumnType(Type.varchar, 75), false),
             new Column(this.DATE_CREATED, new ColumnType(Type.bigint), false),
             new Column(this.DATE_LAST_LOGIN, new ColumnType(Type.bigint), false),
-            new Column(this.DATE_EARNED_FITNESS_POINTS, new ColumnType(Type.bigint), false),
+            new Column(this.DATE_EARNED_FITNESS_POINTS, new ColumnType(Type.bigint), true),
             new Column(this.NAME_FIRST, new ColumnType(Type.varchar, 30), false),
             new Column(this.NAME_LAST, new ColumnType(Type.varchar, 30), false),
             new Column(this.ACCOUNT_TYPE, new ColumnType(Type.char), false),
             new Column(this.POINTS_EARNED, new ColumnType(Type.integer), false)
         ];
+    }
+
+    public insert(email: string, password: string, firstName: string, lastName: string, accountType: string) {
+        let now = new Date().getTime();
+
+        let insert = {};
+        insert[this.EMAIL] = email;
+        insert[this.PASSWORD] = password;
+        insert[this.NAME_FIRST] = firstName;
+        insert[this.NAME_LAST] = lastName;
+        insert[this.ACCOUNT_TYPE] = accountType;
+        insert[this.DATE_CREATED] = now;
+        insert[this.DATE_LAST_LOGIN] = now;
+        insert[this.POINTS_EARNED] = 200;
+
+        return this.getInsertQuery(insert);
     }
 }
